@@ -1,4 +1,6 @@
-﻿class MortgageCalculator {
+﻿using System.Numerics;
+
+class MortgageCalculator {
     static double CalculateMonthlyRepayment(double loanAmount, double annualInterestRate, int loanTermYears) {
         // This is used to convert the annual interest rate into a monthly interest rate.
         double monthlyInterestRate = annualInterestRate / 12;
@@ -12,12 +14,20 @@
         return monthlyRepayment;
     }
 
-    static void CalculateTotalInterestPaid(double loanAmount, double annualInterestRate, int loanTermYears) {
+    static double CalculateTotalInterestPaid(double loanAmount, double annualInterestRate, int loanTermYears) {
+        double monthlyRepayment = CalculateMonthlyRepayment(loanAmount, annualInterestRate, loanTermYears);
         
+        double totalPayment = CalculateTotalAmountPaid(loanAmount, annualInterestRate, loanTermYears);
+        double totalInterestPaid = totalPayment - loanAmount;
+
+        return totalInterestPaid;
     }
 
-    static void CalculateTotalAmountPaid(double loanAmount, double annualInterestRate, int loanTermYears) {
-
+    static double CalculateTotalAmountPaid(double loanAmount, double annualInterestRate, int loanTermYears) {
+        double monthlyRepayment = CalculateMonthlyRepayment(loanAmount, annualInterestRate, loanTermYears);
+        double totalPayment = monthlyRepayment * loanTermYears * 12;
+        
+        return totalPayment;
     }
 
     static void GenerateAmortizationSchedule(double loanAmount, double annualInterestRate, int loanTermYears) {
