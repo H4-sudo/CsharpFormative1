@@ -15,8 +15,6 @@ class MortgageCalculator {
     }
 
     static double CalculateTotalInterestPaid(double loanAmount, double annualInterestRate, int loanTermYears) {
-        double monthlyRepayment = CalculateMonthlyRepayment(loanAmount, annualInterestRate, loanTermYears);
-        
         double totalPayment = CalculateTotalAmountPaid(loanAmount, annualInterestRate, loanTermYears);
         double totalInterestPaid = totalPayment - loanAmount;
 
