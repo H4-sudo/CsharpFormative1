@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "NS4LneXyMa4GJLgVhZO8NEWqmGMe7V8DWSo7kc8aVW0H5kEXldZpd8u9rfq3/tXRWtpRPCMZyIvdvOYJAdY+7g==",
+  "dgSpecHash": "ZSGUTz+iu3hzTlRZKAP2Jbt4+zbEt07urgdxh/WSnyvZa2lBJyBNa87SVEl/OKE4A/ipsDwTAfs0CqhdcBDK1Q==",
   "success": true,
   "projectFilePath": "C:\\C#\\Formatives\\FA1\\FA1.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ogdri\\.nuget\\packages\\apache.arrow\\11.0.0\\apache.arrow.11.0.0.nupkg.sha512",
+    "C:\\Users\\ogdri\\.nuget\\packages\\microsoft.data.analysis\\0.21.1\\microsoft.data.analysis.0.21.1.nupkg.sha512",
+    "C:\\Users\\ogdri\\.nuget\\packages\\microsoft.ml.dataview\\3.0.1\\microsoft.ml.dataview.3.0.1.nupkg.sha512",
+    "C:\\Users\\ogdri\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\ogdri\\.nuget\\packages\\system.collections.immutable\\1.5.0\\system.collections.immutable.1.5.0.nupkg.sha512",
+    "C:\\Users\\ogdri\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\ogdri\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
