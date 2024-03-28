@@ -42,33 +42,40 @@
         {
             double interestPayment = remainingBalance * monthlyInterestRate;
             double principalPayment = monthlyRepayment - interestPayment;
+
+            if (i == numberOfPayments) {
+                principalPayment = remainingBalance;
+                monthlyRepayment = principalPayment + interestPayment;
+            }
+
             remainingBalance -= principalPayment;
 
             AmortizationEntry entry = new AmortizationEntry(i, monthlyRepayment, interestPayment, principalPayment, remainingBalance);
             amortizationSchedule.Add(entry);
+            if (remainingBalance <= 0) break;
         }
 
         return amortizationSchedule;
     }
-}
-
-// Class to represent an entry in the amortization schedule
-public class AmortizationEntry
-{
-    public int PaymentNumber { get; }
-    public double PaymentAmount { get; }
-    public double InterestPaid { get; }
-    public double PrincipalPaid { get; }
-    public double RemainingBalance { get; }
-
-    public AmortizationEntry(int paymentNumber, double paymentAmount, double interestPaid, double principalPaid, double remainingBalance)
-    {
-        PaymentNumber = paymentNumber;
-        PaymentAmount = paymentAmount;
-        InterestPaid = interestPaid;
-        PrincipalPaid = principalPaid;
-        RemainingBalance = remainingBalance;
     }
+
+    // Class to represent an entry in the amortization schedule
+    public class AmortizationEntry
+    {
+        public int PaymentNumber { get; }
+        public double PaymentAmount { get; }
+        public double InterestPaid { get; }
+        public double PrincipalPaid { get; }
+        public double RemainingBalance { get; }
+
+        public AmortizationEntry(int paymentNumber, double paymentAmount, double interestPaid, double principalPaid, double remainingBalance)
+        {
+            PaymentNumber = paymentNumber;
+            PaymentAmount = paymentAmount;
+            InterestPaid = interestPaid;
+            PrincipalPaid = principalPaid;
+            RemainingBalance = remainingBalance;
+        }
 }
 
 class Program
