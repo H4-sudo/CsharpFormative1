@@ -43,7 +43,8 @@
             double interestPayment = remainingBalance * monthlyInterestRate;
             double principalPayment = monthlyRepayment - interestPayment;
 
-            if (i == numberOfPayments) {
+            if (i == numberOfPayments)
+            {
                 principalPayment = remainingBalance;
                 monthlyRepayment = principalPayment + interestPayment;
             }
@@ -57,25 +58,25 @@
 
         return amortizationSchedule;
     }
-    }
+}
 
-    // Class to represent an entry in the amortization schedule
-    public class AmortizationEntry
+// Class to represent an entry in the amortization schedule
+public class AmortizationEntry
+{
+    public int PaymentNumber { get; }
+    public double PaymentAmount { get; }
+    public double InterestPaid { get; }
+    public double PrincipalPaid { get; }
+    public double RemainingBalance { get; }
+
+    public AmortizationEntry(int paymentNumber, double paymentAmount, double interestPaid, double principalPaid, double remainingBalance)
     {
-        public int PaymentNumber { get; }
-        public double PaymentAmount { get; }
-        public double InterestPaid { get; }
-        public double PrincipalPaid { get; }
-        public double RemainingBalance { get; }
-
-        public AmortizationEntry(int paymentNumber, double paymentAmount, double interestPaid, double principalPaid, double remainingBalance)
-        {
-            PaymentNumber = paymentNumber;
-            PaymentAmount = paymentAmount;
-            InterestPaid = interestPaid;
-            PrincipalPaid = principalPaid;
-            RemainingBalance = remainingBalance;
-        }
+        PaymentNumber = paymentNumber;
+        PaymentAmount = paymentAmount;
+        InterestPaid = interestPaid;
+        PrincipalPaid = principalPaid;
+        RemainingBalance = remainingBalance;
+    }
 }
 
 class Program
@@ -91,88 +92,107 @@ class Program
         {
             while (true)
             {
-                Console.WriteLine("Good day. Welcome to our console Mortgage Calculator.");
-
-                Console.WriteLine("Please enter your loan amount:");
+                Console.WriteLine("\t\t========================================\t\t");
+                Console.WriteLine("\t\tGood day. Welcome to UXI Mortgage Loans.\t\t");
+                Console.WriteLine("\t\t========================================\t\t\n\n");
+                Console.WriteLine("\t\t========================================\t\t");
+                Console.WriteLine("What would you like to do today?\n1. Take out a loan.\n2. Exit");
+                Console.WriteLine("\t\t========================================\t\t");
                 userInput = Console.ReadLine();
-                while (!double.TryParse(userInput, out loanAmount))
+                if (userInput == "1")
                 {
-                    Console.WriteLine("Invalid input. Please try again using numbers.");
+                    Console.WriteLine("Please enter your loan amount:");
                     userInput = Console.ReadLine();
-                }
-
-                Console.WriteLine("Please enter your annual interest rate:\n(If none is given the default will be set to the prime interest rate which is 11.75%)");
-                userInput = Console.ReadLine();
-                if (!string.IsNullOrEmpty(userInput))
-                {
-                    if (double.TryParse(userInput, out annualInterestRate))
+                    while (!double.TryParse(userInput, out loanAmount))
                     {
-                        // Input is a valid number.
+                        Console.WriteLine("Invalid input. Please try again using numbers.");
+                        userInput = Console.ReadLine();
+                    }
+
+                    Console.WriteLine("Please enter your annual interest rate:\n(If none is given the default will be set to the prime interest rate which is 11.75%)");
+                    Console.WriteLine("Please ensure to use ',' if you want to use a decimal value.");
+                    userInput = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(userInput))
+                    {
+                        if (double.TryParse(userInput, out annualInterestRate))
+                        {
+                            // Input is a valid number.
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Defaulting to prime interest rate of 11.75%");
+                            annualInterestRate = 11.75;
+                        }
                     }
                     else
                     {
                         Console.WriteLine("Invalid input. Defaulting to prime interest rate of 11.75%");
                         annualInterestRate = 11.75;
                     }
+
+                    Console.WriteLine("Please enter your mortgage term in years:");
+                    userInput = Console.ReadLine();
+                    while (!int.TryParse(userInput, out loanTermYears))
+                    {
+                        Console.WriteLine("Invalid input. Please try again using numbers.");
+                        userInput = Console.ReadLine();
+                    }
+
+                    while (true)
+                    {
+                        Console.WriteLine("What would you like to calculate?");
+                        Console.WriteLine("1. Monthly Repayment\n2. Total interest paid over the life of the loan\n3. Total amount paid over the life of the loan.\n4. Amortization schedule");
+                        userInput = Console.ReadLine();
+                        switch (userInput)
+                        {
+                            case "1":
+                                double monthlyRepayment = MortgageCalculator.CalculateMonthlyRepayment(loanAmount, annualInterestRate, loanTermYears);
+                                Console.WriteLine($"The montly repayment amount is R{monthlyRepayment}.");
+                                break;
+                            case "2":
+                                double totalInterest = MortgageCalculator.CalculateTotalInterestPaid(loanAmount, annualInterestRate, loanTermYears);
+                                Console.WriteLine($"The total interest paid over the life of the loan is R{totalInterest}");
+                                break;
+                            case "3":
+                                double totalPaid = MortgageCalculator.CalculateTotalAmountPaid(loanAmount, annualInterestRate, loanTermYears);
+                                Console.WriteLine($"The total paid over the life of the loan is R{totalPaid}");
+                                break;
+                            case "4":
+                                List<AmortizationEntry> amortizationSchedule = MortgageCalculator.GenerateAmortizationSchedule(loanAmount, annualInterestRate, loanTermYears);
+                                Console.WriteLine("\nAmortization Schedule:");
+                                Console.WriteLine("Payment Number | Payment Amount | Interest Paid | Principal Paid | Remaining Balance");
+                                foreach (var entry in amortizationSchedule)
+                                {
+                                    Console.WriteLine($"{entry.PaymentNumber,-14} | {entry.PaymentAmount,-15:C} | {entry.InterestPaid,-13:C} | {entry.PrincipalPaid,-14:C} | {entry.RemainingBalance,-18:C}");
+                                }
+                                break;
+                            default:
+                                Console.WriteLine("Invalid choice. Please choose a valid option (1-4).");
+                                break;
+                        }
+                        Console.WriteLine("Do you want to perform another calculation? (yes/no)");
+                        userInput = Console.ReadLine().ToLower();
+                        if (userInput != "yes")
+                        {
+                            break;
+                        }
+                    }
+                    Console.WriteLine("Thank you for using the Mortgage Calculator.");
+                    Console.WriteLine("Press any key to exit...");
+                    Console.ReadKey();
+                    return;
+                }
+                else if (userInput == "2")
+                {
+                    return;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input. Defaulting to prime interest rate of 11.75%");
-                    annualInterestRate = 11.75;
+                    Console.WriteLine("Incorrect option. Please try again.");
                 }
 
-                Console.WriteLine("Please enter your mortgage term in years:");
-                userInput = Console.ReadLine();
-                while (!int.TryParse(userInput, out loanTermYears))
-                {
-                    Console.WriteLine("Invalid input. Please try again using numbers.");
-                    userInput = Console.ReadLine();
-                }
-
-                while (true)
-                {
-                    Console.WriteLine("What would you like to calculate?");
-                    Console.WriteLine("1. Monthly Repayment\n2. Total interest paid over the life of the loan\n3. Total amount paid over the life of the loan.\n4. Amortization schedule");
-                    userInput = Console.ReadLine();
-                    switch (userInput)
-                    {
-                        case "1":
-                            double monthlyRepayment = MortgageCalculator.CalculateMonthlyRepayment(loanAmount, annualInterestRate, loanTermYears);
-                            Console.WriteLine($"The montly repayment amount is R{monthlyRepayment}.");
-                            break;
-                        case "2":
-                            double totalInterest = MortgageCalculator.CalculateTotalInterestPaid(loanAmount, annualInterestRate, loanTermYears);
-                            Console.WriteLine($"The total interest paid over the life of the loan is R{totalInterest}");
-                            break;
-                        case "3":
-                            double totalPaid = MortgageCalculator.CalculateTotalAmountPaid(loanAmount, annualInterestRate, loanTermYears);
-                            Console.WriteLine($"The total paid over the life of the loan is R{totalPaid}");
-                            break;
-                        case "4":
-                            List<AmortizationEntry> amortizationSchedule = MortgageCalculator.GenerateAmortizationSchedule(loanAmount, annualInterestRate, loanTermYears);
-                            Console.WriteLine("\nAmortization Schedule:");
-                            Console.WriteLine("Payment Number | Payment Amount | Interest Paid | Principal Paid | Remaining Balance");
-                            foreach (var entry in amortizationSchedule)
-                            {
-                                Console.WriteLine($"{entry.PaymentNumber,-14} | {entry.PaymentAmount,-15:C} | {entry.InterestPaid,-13:C} | {entry.PrincipalPaid,-14:C} | {entry.RemainingBalance,-18:C}");
-                            }
-                            break;
-                        default:
-                            Console.WriteLine("Invalid choice. Please choose a valid option (1-4).");
-                            break;
-                    }
-                    Console.WriteLine("Do you want to perform another calculation? (yes/no)");
-                    userInput = Console.ReadLine().ToLower();
-                    if (userInput != "yes")
-                    {
-                        break;
-                    }
-                }
-                Console.WriteLine("Thank you for using the Mortgage Calculator.");
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
-                return;
             }
+
         }
         catch (Exception e)
         {
