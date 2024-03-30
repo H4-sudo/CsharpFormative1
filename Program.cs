@@ -96,21 +96,23 @@ class Program
                 Console.WriteLine("\t\tGood day. Welcome to UXI Mortgage Loans.\t\t");
                 Console.WriteLine("\t\t========================================\t\t\n\n");
                 Console.WriteLine("\t\t========================================\t\t");
-                Console.WriteLine("What would you like to do today?\n1. Take out a loan.\n2. Exit");
+                Console.WriteLine("\t\tWhat would you like to do today?\n\t\t1. Take out a loan.\n\t\t2. Exit");
                 Console.WriteLine("\t\t========================================\t\t");
                 userInput = Console.ReadLine();
                 if (userInput == "1")
                 {
-                    Console.WriteLine("Please enter your loan amount:");
+                    Console.WriteLine("\t\tPlease enter your loan amount:\t\t");
                     userInput = Console.ReadLine();
                     while (!double.TryParse(userInput, out loanAmount))
                     {
-                        Console.WriteLine("Invalid input. Please try again using numbers.");
+                        Console.WriteLine("\t\tInvalid input. Please try again using numbers.\t\t");
                         userInput = Console.ReadLine();
                     }
 
-                    Console.WriteLine("Please enter your annual interest rate:\n(If none is given the default will be set to the prime interest rate which is 11.75%)");
-                    Console.WriteLine("Please ensure to use ',' if you want to use a decimal value.");
+                    Console.WriteLine("\t\t========================================\t\t");
+                    Console.WriteLine("\t\tPlease enter your annual interest rate:\n\t\t(If none is given the default will be set to the prime interest rate which is 11.75%)");
+                    Console.WriteLine("\t\tPlease ensure to use ',' if you want to use a decimal value.\t\t");
+                    Console.WriteLine("\t\t========================================\t\t");
                     userInput = Console.ReadLine();
                     if (!string.IsNullOrEmpty(userInput))
                     {
@@ -120,46 +122,64 @@ class Program
                         }
                         else
                         {
-                            Console.WriteLine("Invalid input. Defaulting to prime interest rate of 11.75%");
+                            Console.WriteLine("\t\t========================================\t\t");
+                            Console.WriteLine("\t\tInvalid input. Defaulting to prime interest rate of 11.75%\t\t");
+                            Console.WriteLine("\t\t========================================\t\t");
                             annualInterestRate = 11.75;
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid input. Defaulting to prime interest rate of 11.75%");
+                        Console.WriteLine("\t\t========================================\t\t");
+                        Console.WriteLine("\t\tInvalid input. Defaulting to prime interest rate of 11.75%\t\t");
+                        Console.WriteLine("\t\t========================================\t\t");
                         annualInterestRate = 11.75;
                     }
 
-                    Console.WriteLine("Please enter your mortgage term in years:");
+                    Console.WriteLine("\t\t========================================\t\t");
+                    Console.WriteLine("\t\tPlease enter your mortgage term in years:\t\t");
+                    Console.WriteLine("\t\t========================================\t\t");
                     userInput = Console.ReadLine();
                     while (!int.TryParse(userInput, out loanTermYears))
                     {
-                        Console.WriteLine("Invalid input. Please try again using numbers.");
+                        Console.WriteLine("\t\t========================================\t\t");
+                        Console.WriteLine("\t\tInvalid input. Please try again using numbers.\t\t");
+                        Console.WriteLine("\t\t========================================\t\t");
                         userInput = Console.ReadLine();
                     }
 
                     while (true)
                     {
-                        Console.WriteLine("What would you like to calculate?");
-                        Console.WriteLine("1. Monthly Repayment\n2. Total interest paid over the life of the loan\n3. Total amount paid over the life of the loan.\n4. Amortization schedule");
+                        Console.WriteLine("\t\t========================================\t\t");
+                        Console.WriteLine("\t\tWhat would you like to calculate?\t\t");
+                        Console.WriteLine("\t\t1. Monthly Repayment\n\t\t2. Total interest paid over the life of the loan\n\t\t3. Total amount paid over the life of the loan.\n\t\t4. Amortization schedule");
+                        Console.WriteLine("\t\t========================================\t\t");
                         userInput = Console.ReadLine();
                         switch (userInput)
                         {
                             case "1":
                                 double monthlyRepayment = MortgageCalculator.CalculateMonthlyRepayment(loanAmount, annualInterestRate, loanTermYears);
-                                Console.WriteLine($"The montly repayment amount is R{monthlyRepayment}.");
+                                Console.WriteLine("\t\t========================================\t\t");
+                                Console.WriteLine($"\t\tThe montly repayment amount is R{monthlyRepayment}.\t\t");
+                                Console.WriteLine("\t\t========================================\t\t");
                                 break;
                             case "2":
                                 double totalInterest = MortgageCalculator.CalculateTotalInterestPaid(loanAmount, annualInterestRate, loanTermYears);
-                                Console.WriteLine($"The total interest paid over the life of the loan is R{totalInterest}");
+                                Console.WriteLine("\t\t========================================\t\t");
+                                Console.WriteLine($"\t\tThe total interest paid over the life of the loan is R{totalInterest}.\t\t");
+                                Console.WriteLine("\t\t========================================\t\t");
                                 break;
                             case "3":
                                 double totalPaid = MortgageCalculator.CalculateTotalAmountPaid(loanAmount, annualInterestRate, loanTermYears);
-                                Console.WriteLine($"The total paid over the life of the loan is R{totalPaid}");
+                                Console.WriteLine("\t\t========================================\t\t");
+                                Console.WriteLine($"\t\tThe total paid over the life of the loan is R{totalPaid}.\t\t");
+                                Console.WriteLine("\t\t========================================\t\t");
                                 break;
                             case "4":
                                 List<AmortizationEntry> amortizationSchedule = MortgageCalculator.GenerateAmortizationSchedule(loanAmount, annualInterestRate, loanTermYears);
-                                Console.WriteLine("\nAmortization Schedule:");
+                                Console.WriteLine("\t\t========================================\t\t");
+                                Console.WriteLine("\n\t\tAmortization Schedule:\t\t");
+                                Console.WriteLine("\n\t\t========================================\t\t");
                                 Console.WriteLine("Payment Number | Payment Amount | Interest Paid | Principal Paid | Remaining Balance");
                                 foreach (var entry in amortizationSchedule)
                                 {
@@ -167,18 +187,24 @@ class Program
                                 }
                                 break;
                             default:
-                                Console.WriteLine("Invalid choice. Please choose a valid option (1-4).");
+                                Console.WriteLine("\t\t========================================\t\t");
+                                Console.WriteLine("\t\tInvalid choice. Please choose a valid option (1-4).\t\t");
+                                Console.WriteLine("\t\t========================================\t\t");
                                 break;
                         }
-                        Console.WriteLine("Do you want to perform another calculation? (yes/no)");
+                        Console.WriteLine("\t\t========================================\t\t");
+                        Console.WriteLine("\t\tDo you want to perform another calculation? (yes/no)\t\t");
+                        Console.WriteLine("\t\t========================================\t\t");
                         userInput = Console.ReadLine().ToLower();
                         if (userInput != "yes")
                         {
                             break;
                         }
                     }
-                    Console.WriteLine("Thank you for using the Mortgage Calculator.");
-                    Console.WriteLine("Press any key to exit...");
+                    Console.WriteLine("\t\t========================================\t\t");
+                    Console.WriteLine("\t\tThank you for using the Mortgage Calculator.\t\t");
+                    Console.WriteLine("\t\tPress any key to exit...\t\t");
+                    Console.WriteLine("\t\t========================================\t\t");
                     Console.ReadKey();
                     return;
                 }
@@ -188,7 +214,9 @@ class Program
                 }
                 else
                 {
-                    Console.WriteLine("Incorrect option. Please try again.");
+                    Console.WriteLine("\t\t========================================\t\t");
+                    Console.WriteLine("\t\tIncorrect option. Please try again.\t\t");
+                    Console.WriteLine("\t\t========================================\t\t");
                 }
 
             }
