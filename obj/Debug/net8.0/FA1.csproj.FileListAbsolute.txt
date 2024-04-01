@@ -17,3 +17,4 @@ C:\C#\Formatives\FA1\obj\Debug\net8.0\refint\FA1.dll
 C:\C#\Formatives\FA1\obj\Debug\net8.0\FA1.pdb
 C:\C#\Formatives\FA1\obj\Debug\net8.0\FA1.genruntimeconfig.cache
 C:\C#\Formatives\FA1\obj\Debug\net8.0\ref\FA1.dll
+C:\C#\Formatives\FA1\obj\Debug\net8.0\FA1.sourcelink.json
