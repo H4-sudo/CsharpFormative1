@@ -1,5 +1,6 @@
 ﻿class MortgageCalculator
 {
+    // Method to calculate the monthly repayment amount for a mortgage loan
     public static double CalculateMonthlyRepayment(double loanAmount, double annualInterestRate, int loanTermYears)
     {
         // This is used to convert the annual interest rate into a monthly interest rate.
@@ -14,6 +15,7 @@
         return Math.Round(monthlyRepayment, 2);
     }
 
+    // Method to calculate the total interest paid over the life of the loan
     public static double CalculateTotalInterestPaid(double loanAmount, double annualInterestRate, int loanTermYears)
     {
         double totalPayment = CalculateTotalAmountPaid(loanAmount, annualInterestRate, loanTermYears);
@@ -22,6 +24,7 @@
         return Math.Round(totalInterestPaid, 2);
     }
 
+    // Method to calculate the total amount paid over the life of the loan
     public static double CalculateTotalAmountPaid(double loanAmount, double annualInterestRate, int loanTermYears)
     {
         double monthlyRepayment = CalculateMonthlyRepayment(loanAmount, annualInterestRate, loanTermYears);
@@ -30,6 +33,7 @@
         return Math.Round(totalPayment, 2);
     }
 
+    // Method to generate an amortization schedule for the loan
     public static List<AmortizationEntry> GenerateAmortizationSchedule(double loanAmount, double annualInterestRate, int loanTermYears)
     {
         List<AmortizationEntry> amortizationSchedule = new List<AmortizationEntry>();
@@ -40,9 +44,11 @@
         double remainingBalance = loanAmount;
         for (int i = 1; i <= numberOfPayments; i++)
         {
+            // Calculate interest and principal payments for each period
             double interestPayment = remainingBalance * monthlyInterestRate;
             double principalPayment = monthlyRepayment - interestPayment;
 
+            // Adjust final payment to match remaining balance
             if (i == numberOfPayments)
             {
                 principalPayment = remainingBalance;
@@ -51,6 +57,7 @@
 
             remainingBalance -= principalPayment;
 
+            // Create an entry for the amortization schedule
             AmortizationEntry entry = new AmortizationEntry(i, monthlyRepayment, interestPayment, principalPayment, remainingBalance);
             amortizationSchedule.Add(entry);
             if (remainingBalance <= 0) break;
@@ -63,12 +70,14 @@
 // Class to represent an entry in the amortization schedule
 public class AmortizationEntry
 {
+    // Properties for payment details
     public int PaymentNumber { get; }
     public double PaymentAmount { get; }
     public double InterestPaid { get; }
     public double PrincipalPaid { get; }
     public double RemainingBalance { get; }
 
+    // Constructor to initialize the entry
     public AmortizationEntry(int paymentNumber, double paymentAmount, double interestPaid, double principalPaid, double remainingBalance)
     {
         PaymentNumber = paymentNumber;
@@ -83,6 +92,7 @@ class Program
 {
     public static void Main()
     {
+        // Main method to interact with the user
         string userInput;
         double annualInterestRate;
         int loanTermYears = 0;
@@ -92,6 +102,7 @@ class Program
         {
             while (true)
             {
+                // User interface for mortgage calculator
                 Console.WriteLine("\t\t========================================\t\t");
                 Console.WriteLine("\t\tGood day. Welcome to UXI Mortgage Loans.\t\t");
                 Console.WriteLine("\t\t========================================\t\t\n\n");
@@ -101,6 +112,7 @@ class Program
                 userInput = Console.ReadLine();
                 if (userInput == "1")
                 {
+                    // Loan application process
                     Console.WriteLine("\t\t========================================\t\t");
                     Console.WriteLine("\t\tPlease enter your loan amount:\t\t");
                     Console.WriteLine("\t\t========================================\t\t");
@@ -113,6 +125,7 @@ class Program
                         userInput = Console.ReadLine();
                     }
 
+                    // Prompt for annual interest rate
                     Console.WriteLine("\t\t========================================\t\t");
                     Console.WriteLine("\t\tPlease enter your annual interest rate:\n\t\t(If none is given the default will be set to the prime interest rate which is 11.75%)");
                     Console.WriteLine("\t\tPlease ensure to use ',' if you want to use a decimal value.\t\t");
@@ -140,6 +153,7 @@ class Program
                         annualInterestRate = 11.75;
                     }
 
+                    // Prompt for loan term in years
                     Console.WriteLine("\t\t========================================\t\t");
                     Console.WriteLine("\t\tPlease enter your mortgage term in years:\t\t");
                     Console.WriteLine("\t\t========================================\t\t");
@@ -152,6 +166,7 @@ class Program
                         userInput = Console.ReadLine();
                     }
 
+                    // Calculate and display various metrics based on user choice
                     while (true)
                     {
                         Console.WriteLine("\t\t========================================\t\t");
@@ -214,10 +229,12 @@ class Program
                 }
                 else if (userInput == "2")
                 {
+                    // Exit application
                     return;
                 }
                 else
                 {
+                    // Invalid option
                     Console.WriteLine("\t\t========================================\t\t");
                     Console.WriteLine("\t\tIncorrect option. Please try again.\t\t");
                     Console.WriteLine("\t\t========================================\t\t");
@@ -228,6 +245,7 @@ class Program
         }
         catch (Exception e)
         {
+            // Error handling
             Console.WriteLine("An error occurred: " + e.Message);
         }
     }
