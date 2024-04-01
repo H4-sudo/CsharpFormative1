@@ -101,11 +101,15 @@ class Program
                 userInput = Console.ReadLine();
                 if (userInput == "1")
                 {
+                    Console.WriteLine("\t\t========================================\t\t");
                     Console.WriteLine("\t\tPlease enter your loan amount:\t\t");
+                    Console.WriteLine("\t\t========================================\t\t");
                     userInput = Console.ReadLine();
                     while (!double.TryParse(userInput, out loanAmount))
                     {
+                        Console.WriteLine("\t\t========================================\t\t");
                         Console.WriteLine("\t\tInvalid input. Please try again using numbers.\t\t");
+                        Console.WriteLine("\t\t========================================\t\t");
                         userInput = Console.ReadLine();
                     }
 
